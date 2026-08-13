@@ -33,7 +33,7 @@ export function FlagStatusBar({ flags, ctaColor }: FlagStatusBarProps) {
   if (flags.length === 0) return null;
 
   return (
-    <div className="flex flex-wrap items-center gap-2 rounded-lg border border-border bg-card px-4 py-2.5">
+    <div className="flex flex-wrap items-center gap-2 rounded-xl border border-border bg-card px-4 py-2.5">
       <Flag className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
       <span className="text-xs text-muted-foreground">Flags ativas nesta página:</span>
       {flags.map((f) => (

@@ -388,21 +388,22 @@ export default function ExperimentsPage() {
   const stopped = data?.filter(e => e.status === "stopped") ?? [];
 
   return (
-    <div className="p-6 space-y-6 max-w-3xl">
-      <div className="flex items-center justify-between">
+    <div className="max-w-5xl space-y-6">
+      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
         <div>
-          <div className="flex items-center gap-2">
-            <FlaskConical className="h-5 w-5 text-primary" />
-            <h1 className="text-lg font-semibold">Experimentos Adaptativos</h1>
+          <div className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+            <FlaskConical className="h-3.5 w-3.5" />
+            Experimentation lab
           </div>
-          <p className="text-xs text-muted-foreground mt-0.5">
+          <h1 className="text-3xl font-black sm:text-4xl">Experimentos Adaptativos</h1>
+          <p className="mt-1.5 max-w-2xl text-sm text-muted-foreground">
             A política bandit escolhe adaptivamente qual oferta mostrar. Resultados mostram qual braço venceu.
           </p>
         </div>
         <NewExperimentForm onCreated={() => mutate()} />
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         {[
           { label: "Em execução", value: running.length, color: "text-green-600" },
           { label: "Rascunho",    value: draft.length,   color: "text-yellow-600" },

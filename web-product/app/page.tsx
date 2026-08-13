@@ -90,7 +90,7 @@ export default function HomePage() {
     <div className="overflow-x-hidden">
 
       {/* ════════════════ HERO ════════════════ */}
-      <section className="relative min-h-[calc(100vh-57px)] flex flex-col items-center justify-center px-6 py-24 text-center overflow-hidden hero-mesh dot-grid ao-bg">
+      <section className="relative flex min-h-[calc(100svh-64px)] flex-col items-center justify-center overflow-hidden px-4 py-20 text-center hero-mesh dot-grid ao-bg sm:px-6 sm:py-24">
 
         {/* Ambient layers — depth effect like Stripe/Mercury */}
         <div className="pointer-events-none absolute top-0 left-1/2 -translate-x-1/2 h-[1px] w-2/3 bg-gradient-to-r from-transparent via-[#FFD100]/25 to-transparent" />
@@ -98,17 +98,17 @@ export default function HomePage() {
         <div className="pointer-events-none absolute top-1/3 -left-32 h-64 w-64 rounded-full bg-[#FFD100]/3 blur-[80px]" />
         <div className="pointer-events-none absolute bottom-1/4 -right-24 h-48 w-48 rounded-full bg-white/[0.015] blur-[60px]" />
 
-        <div className="relative z-10 max-w-4xl mx-auto">
+        <div className="relative z-10 mx-auto max-w-5xl">
 
           {/* Status badge */}
-          <div className="flex justify-center mb-8 opacity-0 animate-fade-up" style={{ animationDelay: "0ms" }}>
+          <div className="mb-7 flex justify-center opacity-0 animate-fade-up" style={{ animationDelay: "0ms" }}>
             {!isLoading && adaptiveEnabled ? (
               <span className="xp-tag">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#FFD100] animate-pulse" />
                 Sistema Adaptativo Ativo
               </span>
             ) : (
-              <span className="xp-tag" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.08)", color: "#666" }}>
+              <span className="xp-tag" style={{ background: "rgba(255,255,255,0.04)", borderColor: "rgba(255,255,255,0.08)", color: "#aaa" }}>
                 Plataforma de Investimentos
               </span>
             )}
@@ -116,23 +116,23 @@ export default function HomePage() {
 
           {/* Headline */}
           <div className="mb-6 opacity-0 animate-fade-up" style={{ animationDelay: "80ms" }}>
-            <h1 className="text-6xl sm:text-7xl lg:text-8xl font-black tracking-tight leading-[0.95]">
+            <h1 className="text-balance text-5xl font-black leading-[0.94] tracking-[-0.055em] sm:text-7xl lg:text-8xl">
               <span className="text-white block">Investimentos</span>
-              <span className="text-[#FFD100] block">inteligentes.</span>
+              <span className="gradient-text-yellow block">inteligentes.</span>
             </h1>
           </div>
 
           {/* Sub */}
-          <p className="text-lg text-[#666] max-w-xl mx-auto mb-10 opacity-0 animate-fade-up leading-relaxed" style={{ animationDelay: "160ms" }}>
+          <p className="mx-auto mb-10 max-w-2xl text-base leading-relaxed text-[#AAA] opacity-0 animate-fade-up sm:text-lg" style={{ animationDelay: "160ms" }}>
             Ofertas personalizadas em tempo real. Nosso sistema adaptativo identifica
             o produto ideal para o seu perfil de investidor.
           </p>
 
           {/* CTAs */}
-          <div className="flex flex-wrap items-center justify-center gap-4 opacity-0 animate-fade-up" style={{ animationDelay: "240ms" }}>
-            <Link href="/produtos">
+          <div className="flex flex-col items-stretch justify-center gap-3 opacity-0 animate-fade-up sm:flex-row sm:items-center" style={{ animationDelay: "240ms" }}>
+            <Link href="/produtos" className="w-full sm:w-auto">
               <button
-                className="h-12 px-8 text-black text-sm font-bold rounded-sm transition-all inline-flex items-center gap-2 glow-yellow-sm hover:glow-yellow"
+                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl px-8 text-sm font-bold text-black transition-all glow-yellow-sm hover:-translate-y-0.5 hover:glow-yellow sm:w-auto"
                 style={{ backgroundColor: ctaColor }}
                 onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = ctaHover; }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = ctaColor; }}
@@ -141,8 +141,8 @@ export default function HomePage() {
               </button>
             </Link>
             {!isLoading && adaptiveEnabled && recommendedProduct && (
-              <Link href={`/produtos/${recommendedArm}`}>
-                <button className="h-12 px-8 border border-[#FFD100]/20 hover:border-[#FFD100]/50 text-[#FFD100] text-sm font-semibold rounded-sm transition-all inline-flex items-center gap-2 hover:bg-[#FFD100]/5">
+              <Link href={`/produtos/${recommendedArm}`} className="w-full sm:w-auto">
+                <button className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl border border-[#FFD100]/20 px-8 text-sm font-semibold text-[#FFD100] transition-all hover:-translate-y-0.5 hover:border-[#FFD100]/50 hover:bg-[#FFD100]/5 sm:w-auto">
                   <Sparkles className="h-4 w-4" />
                   Oferta Recomendada
                 </button>
@@ -154,13 +154,13 @@ export default function HomePage() {
           {!isLoading && adaptiveEnabled && recommendedProduct && (
             <div className="mt-8 opacity-0 animate-fade-up" style={{ animationDelay: "320ms" }}>
               <Link href={`/produtos/${recommendedArm}`}>
-                <div className="inline-flex items-center gap-3 border border-[#242424] hover:border-[#FFD100]/25 rounded-sm px-4 py-2.5 transition-all group cursor-pointer bg-[#0F0F0F]">
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-[#555]">IA recomenda:</span>
+                <div className="group inline-flex max-w-full cursor-pointer items-center gap-3 rounded-xl border border-[#2C2C2A] bg-[#0F0F0F]/90 px-4 py-2.5 transition-all hover:border-[#FFD100]/25">
+                  <div className="flex min-w-0 flex-wrap items-center justify-center gap-x-2 gap-y-1">
+                    <span className="text-xs text-[#999]">IA recomenda:</span>
                     <span className="text-xs font-semibold text-white">{recommendedProduct.name}</span>
                     <span className="text-xs font-bold text-[#FFD100]">{recommendedProduct.rate}</span>
                   </div>
-                  <ArrowRight className="h-3 w-3 text-[#444] group-hover:text-[#FFD100] transition-colors" />
+                  <ArrowRight className="h-3 w-3 shrink-0 text-[#777] transition-colors group-hover:text-[#FFD100]" />
                 </div>
               </Link>
             </div>
@@ -174,29 +174,29 @@ export default function HomePage() {
       </section>
 
       {/* ════════════════ STATS ════════════════ */}
-      <section className="border-y border-[#1A1A1A] bg-[#0A0A0A] px-6 py-12">
-        <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8">
+      <section className="border-y border-white/[0.06] bg-white/[0.015] px-4 py-10 sm:px-6">
+        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 sm:grid-cols-4">
           {STATS.map((s, i) => (
             <div key={s.label} className="text-center" style={{ animationDelay: `${i * 80}ms` }}>
               <p className="text-3xl font-black text-[#FFD100]">{s.value}</p>
-              <p className="text-xs text-[#555] mt-1.5 font-medium">{s.label}</p>
+              <p className="mt-1.5 text-xs font-medium text-[#999]">{s.label}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* ════════════════ FEATURED PRODUCTS ════════════════ */}
-      <section className="px-6 py-20 max-w-5xl mx-auto">
-        <div className="flex items-end justify-between mb-10">
+      <section className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-24">
+        <div className="mb-10 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div className="opacity-0 animate-fade-up" style={{ animationDelay: "0ms" }}>
             <p className="text-xs font-bold text-[#FFD100] tracking-widest uppercase mb-2">Portfólio</p>
             <h2 className="text-3xl font-black text-white">Produtos em Destaque</h2>
-            <p className="text-[#555] mt-1.5 text-sm">
+            <p className="mt-1.5 text-sm text-[#999]">
               {adaptiveEnabled ? "Selecionados com base no seu perfil" : "Nossos produtos mais populares"}
             </p>
           </div>
           <Link href="/produtos" className="opacity-0 animate-fade-up" style={{ animationDelay: "100ms" }}>
-            <button className="text-xs text-[#555] hover:text-[#FFD100] transition-colors inline-flex items-center gap-1.5 font-semibold">
+            <button className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#999] transition-colors hover:text-[#FFD100]">
               Ver todos <ArrowRight className="h-3.5 w-3.5" />
             </button>
           </Link>
@@ -216,14 +216,14 @@ export default function HomePage() {
                 className="opacity-0 animate-fade-up"
                 style={{ animationDelay: `${i * 80}ms` }}
               >
-                <div className={`group relative rounded-sm p-6 h-full transition-all duration-200 cursor-pointer border ${
+                <div className={`group relative h-full cursor-pointer rounded-2xl border p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_-36px_rgba(255,209,0,0.55)] ${
                   isRecommended
                     ? "bg-[#141414] border-[#FFD100]/30 hover:border-[#FFD100]/50"
                     : "bg-[#0F0F0F] border-[#1E1E1E] hover:border-[#FFD100]/20 hover:bg-[#141414]"
                 }`}>
                   {/* Recommended top accent line */}
                   {isRecommended && (
-                    <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FFD100] to-transparent rounded-t-sm" />
+                    <div className="absolute left-4 right-4 top-0 h-px bg-gradient-to-r from-transparent via-[#FFD100] to-transparent" />
                   )}
 
                   {/* Badge */}
@@ -236,7 +236,7 @@ export default function HomePage() {
                   )}
                   {p.badge && !isRecommended && (
                     <div className="absolute -top-2.5 left-4">
-                      <span className="inline-flex items-center px-2 py-0.5 rounded-sm bg-[#1E1E1E] border border-[#2A2A2A] text-[#888] text-[10px] font-semibold">
+                      <span className="inline-flex items-center rounded-lg border border-[#2A2A2A] bg-[#1E1E1E] px-2 py-0.5 text-[10px] font-semibold text-[#BBB]">
                         {p.badge}
                       </span>
                     </div>
@@ -244,17 +244,17 @@ export default function HomePage() {
 
                   {/* Icon */}
                   <div className="mb-5">
-                    <Icon className="h-6 w-6" style={{ color: isRecommended ? "#FFD100" : "#444" }} />
+                    <Icon className="h-6 w-6" style={{ color: isRecommended ? "#FFD100" : "#888" }} />
                   </div>
 
                   <h3 className="text-base font-bold text-white mb-1">{p.name}</h3>
-                  <p className="text-xs text-[#555] mb-5">{p.term}</p>
+                  <p className="mb-5 text-xs text-[#999]">{p.term}</p>
 
-                  <p className={`text-2xl font-black ${isRecommended ? "text-[#FFD100]" : "text-[#888]"}`}>
+                  <p className={`text-2xl font-black ${isRecommended ? "text-[#FFD100]" : "text-[#BBB]"}`}>
                     {p.rate}
                   </p>
 
-                  <div className="mt-5 pt-4 border-t border-[#1A1A1A] flex items-center gap-1.5 text-xs text-[#444] group-hover:text-[#FFD100] transition-colors font-semibold">
+                  <div className="mt-5 flex items-center gap-1.5 border-t border-[#242424] pt-4 text-xs font-semibold text-[#888] transition-colors group-hover:text-[#FFD100]">
                     Ver detalhes <ArrowRight className="h-3 w-3" />
                   </div>
                 </div>
@@ -265,26 +265,26 @@ export default function HomePage() {
       </section>
 
       {/* ════════════════ WHY ════════════════ */}
-      <section className="px-6 py-20 border-t border-[#1A1A1A] bg-[#080808]">
-        <div className="max-w-5xl mx-auto">
+      <section className="border-t border-white/[0.06] bg-[#080808] px-4 py-20 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-6xl">
           <div className="mb-14">
             <p className="text-xs font-bold text-[#FFD100] tracking-widest uppercase mb-2">Diferenciais</p>
             <h2 className="text-3xl font-black text-white">Por que AdaptaOffer?</h2>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-0">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             {WHY_ITEMS.map((item, i) => {
               const Icon = item.icon;
               return (
                 <div
                   key={item.title}
-                  className={`p-8 opacity-0 animate-fade-up border-r border-[#1A1A1A] last:border-r-0 ${i === 0 ? "" : ""}`}
+                  className="rounded-2xl border border-white/[0.06] bg-white/[0.02] p-7 opacity-0 animate-fade-up transition-colors hover:border-[#FFD100]/20 hover:bg-[#FFD100]/[0.03]"
                   style={{ animationDelay: `${i * 100}ms` }}
                 >
-                  <div className="h-10 w-10 rounded-sm bg-[#FFD100]/8 border border-[#FFD100]/15 flex items-center justify-center mb-5">
+                  <div className="mb-5 flex h-11 w-11 items-center justify-center rounded-xl border border-[#FFD100]/15 bg-[#FFD100]/[0.08]">
                     <Icon className="h-5 w-5 text-[#FFD100]" />
                   </div>
                   <h3 className="font-bold text-white mb-2">{item.title}</h3>
-                  <p className="text-sm text-[#555] leading-relaxed">{item.desc}</p>
+                  <p className="text-sm leading-relaxed text-[#999]">{item.desc}</p>
                 </div>
               );
             })}
@@ -293,9 +293,9 @@ export default function HomePage() {
       </section>
 
       {/* ════════════════ CTA BANNER ════════════════ */}
-      <section className="px-6 py-24">
-        <div className="max-w-5xl mx-auto">
-          <div className="relative overflow-hidden rounded-sm border border-[#FFD100]/15 bg-[#0D0D0D] p-12 sm:p-16 text-center noise">
+      <section className="px-4 py-20 sm:px-6 sm:py-24">
+        <div className="mx-auto max-w-6xl">
+          <div className="relative overflow-hidden rounded-3xl border border-[#FFD100]/15 bg-[#0D0D0D] p-8 text-center noise sm:p-16">
             {/* Yellow glow corners */}
             <div className="pointer-events-none absolute -top-12 left-1/2 -translate-x-1/2 h-32 w-64 rounded-full bg-[#FFD100]/6 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 h-24 w-48 rounded-full bg-[#FFD100]/4 blur-3xl" />
@@ -308,15 +308,15 @@ export default function HomePage() {
                 Pronto para<br />
                 <span className="text-[#FFD100]">investir melhor?</span>
               </h2>
-              <p className="text-[#555] mb-10 max-w-md mx-auto text-sm leading-relaxed">
+              <p className="mx-auto mb-10 max-w-md text-sm leading-relaxed text-[#999]">
                 {adaptiveEnabled
                   ? "Nossa IA já identificou a melhor oferta para o seu perfil. Contrate em poucos passos."
                   : "Explore nosso portfólio e encontre o produto financeiro ideal para você."}
               </p>
-              <div className="flex flex-wrap gap-4 justify-center">
-                <Link href="/produtos">
+              <div className="flex flex-col justify-center gap-3 sm:flex-row">
+                <Link href="/produtos" className="w-full sm:w-auto">
                   <button
-                    className="h-13 px-10 text-black text-sm font-black rounded-sm transition-all inline-flex items-center gap-2 glow-yellow hover:scale-[1.02]"
+                    className="inline-flex h-13 w-full items-center justify-center gap-2 rounded-xl px-10 text-sm font-black text-black transition-all glow-yellow hover:-translate-y-0.5 sm:w-auto"
                     style={{ backgroundColor: ctaColor }}
                     onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = ctaHover; }}
                     onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.backgroundColor = ctaColor; }}
@@ -325,8 +325,8 @@ export default function HomePage() {
                   </button>
                 </Link>
                 {adaptiveEnabled && (
-                  <Link href={`/produtos/${recommendedArm}`}>
-                    <button className="h-13 px-10 border border-[#FFD100]/25 hover:border-[#FFD100]/50 text-[#FFD100] text-sm font-semibold rounded-sm transition-all inline-flex items-center gap-2 hover:bg-[#FFD100]/5">
+                  <Link href={`/produtos/${recommendedArm}`} className="w-full sm:w-auto">
+                    <button className="inline-flex h-13 w-full items-center justify-center gap-2 rounded-xl border border-[#FFD100]/25 px-10 text-sm font-semibold text-[#FFD100] transition-all hover:-translate-y-0.5 hover:border-[#FFD100]/50 hover:bg-[#FFD100]/5 sm:w-auto">
                       <Sparkles className="h-4 w-4" />
                       Ver minha oferta
                     </button>

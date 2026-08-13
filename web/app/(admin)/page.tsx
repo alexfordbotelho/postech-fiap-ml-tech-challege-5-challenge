@@ -784,12 +784,18 @@ export default function InsightPage() {
     <div className="space-y-7">
 
       {/* header */}
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Lightbulb className="h-5 w-5 text-primary" />
-          <h1 className="text-xl font-extrabold">Insights</h1>
+      <div className="flex items-end justify-between gap-4">
+        <div>
+          <div className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+            <Lightbulb className="h-3.5 w-3.5" />
+            Decision intelligence
+          </div>
+          <h1 className="text-3xl font-black tracking-tight sm:text-4xl">Insights</h1>
+          <p className="mt-1.5 max-w-2xl text-sm text-muted-foreground">
+            Performance, oportunidades e sinais dos experimentos adaptativos.
+          </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="hidden items-center gap-3 sm:flex">
           {running.length > 0 && (
             <span className="flex items-center gap-1.5 text-[11px] text-green-600 font-semibold">
               <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse" />

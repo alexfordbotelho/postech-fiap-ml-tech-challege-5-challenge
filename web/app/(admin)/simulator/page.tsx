@@ -19,7 +19,7 @@ import {
 } from "@/components/ui/select";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, ThumbsDown, ThumbsUp } from "lucide-react";
+import { Loader2, SlidersHorizontal, ThumbsDown, ThumbsUp } from "lucide-react";
 
 const EDUCATION_OPTIONS = ["primary", "secondary", "tertiary", "unknown"];
 const HOUSING_OPTIONS = ["yes", "no"];
@@ -95,8 +95,12 @@ export default function SimulatorPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-xl font-bold">Simulador de Oferta</h1>
-        <p className="text-sm text-muted-foreground">
+        <div className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+          <SlidersHorizontal className="h-3.5 w-3.5" />
+          Decision sandbox
+        </div>
+        <h1 className="text-3xl font-black sm:text-4xl">Simulador de Oferta</h1>
+        <p className="mt-1.5 text-sm text-muted-foreground">
           Configure o perfil do cliente e veja qual oferta o bandit recomenda
         </p>
       </div>
@@ -107,7 +111,7 @@ export default function SimulatorPage() {
             <CardTitle className="text-sm">Perfil do Cliente</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
                 <Label className="text-xs">Idade</Label>
                 <Input
@@ -144,7 +148,7 @@ export default function SimulatorPage() {
               </Select>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
                 <Label className="text-xs">Financiamento imóvel</Label>
                 <Select value={housing} onValueChange={setHousing}>
@@ -177,7 +181,7 @@ export default function SimulatorPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               <div className="space-y-1.5">
                 <Label className="text-xs">Canal</Label>
                 <Select value={channel} onValueChange={setChannel}>
@@ -225,7 +229,7 @@ export default function SimulatorPage() {
           )}
 
           {decision && !loading && (
-            <div className="flex gap-3">
+            <div className="flex flex-col gap-3 sm:flex-row">
               <Button
                 variant="outline"
                 className="flex-1 gap-2 border-green-600 text-green-400 hover:bg-green-600/10"

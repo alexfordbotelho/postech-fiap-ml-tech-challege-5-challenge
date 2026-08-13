@@ -1,7 +1,7 @@
 "use client";
 
 import { SWRConfig } from "swr";
-import { Sidebar } from "@/components/layout/Sidebar";
+import { MobileNavigation, Sidebar } from "@/components/layout/Sidebar";
 import { FloatingChat } from "@/components/layout/FloatingChat";
 import { Toaster } from "@/components/ui/toaster";
 import { PerformanceOverlay } from "@/components/layout/PerformanceOverlay";
@@ -25,9 +25,16 @@ export default function AdminLayout({
         errorRetryCount: 2,
       }}
     >
-      <div className="flex h-screen overflow-hidden">
+      <div className="flex h-[100dvh] overflow-hidden">
         <Sidebar />
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <div className="flex min-w-0 flex-1 flex-col">
+          <MobileNavigation />
+          <main className="admin-canvas flex-1 overflow-y-auto">
+            <div className="mx-auto w-full max-w-[1480px] p-4 pb-24 sm:p-6 sm:pb-24 lg:p-8 lg:pb-24">
+              {children}
+            </div>
+          </main>
+        </div>
       </div>
       <FloatingChat />
       <Toaster />
