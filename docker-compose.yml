@@ -1,0 +1,271 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile
+    ports:
+      - "8001:8000"   # 8000 occupied by sentinel-hyperdx on host
+    env_file: .env
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      kafka:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+      qdrant:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/healthz"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - datathon-net
+
+  mlflow:
+    image: ghcr.io/mlflow/mlflow:latest
+    restart: unless-stopped
+    ports:
+      - "5010:5000"   # 5000 occupied by macOS ControlCenter on host
+    command: >
+      mlflow server
+      --backend-store-uri postgresql://${POSTGRES_USER:-datathon}:${POSTGRES_PASSWORD:-datathon_local_pw}@postgres:5432/${POSTGRES_DB:-datathon_db}
+      --default-artifact-root s3://mlflow-artifacts
+      --host 0.0.0.0
+      --port 5000
+      --workers 1
+      --allowed-hosts "mlflow:5000,localhost,127.0.0.1,*"
+    environment:
+      MLFLOW_S3_ENDPOINT_URL: http://minio:9100
+      AWS_ACCESS_KEY_ID: ${MINIO_ROOT_USER:-minioadmin}
+      AWS_SECRET_ACCESS_KEY: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    depends_on:
+      postgres:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "python3 -c \"import urllib.request; urllib.request.urlopen('http://localhost:5000/health')\""]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+    networks:
+      - datathon-net
+
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-datathon}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-datathon_local_pw}
+      POSTGRES_DB: ${POSTGRES_DB:-datathon_db}
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./infra/sql:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-datathon} -d ${POSTGRES_DB:-datathon_db}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    networks:
+      - datathon-net
+
+  minio:
+    image: minio/minio:latest
+    restart: unless-stopped
+    ports:
+      - "9100:9000"   # API — remapeado para evitar conflito com ClickHouse porta 9000
+      - "9101:9001"   # Console
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - datathon-net
+
+  redis:
+    image: redis:7-alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+    networks:
+      - datathon-net
+
+  kafka:
+    image: confluentinc/cp-kafka:7.6.0
+    restart: unless-stopped
+    ports:
+      - "9092:9092"
+    volumes:
+      - kafka_data:/var/lib/kafka/data
+    environment:
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      CLUSTER_ID: Qu2yHZr0REazYD8qiGc--A
+    healthcheck:
+      test: ["CMD", "kafka-topics", "--bootstrap-server", "localhost:9092", "--list"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+    networks:
+      - datathon-net
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:23.3-alpine  # 23.3 LTS: menor footprint de startup que 24.x
+    restart: unless-stopped
+    ports:
+      - "8124:8123"   # HTTP interface (8124 host → 8123 container; 8123 occupied by another project)
+      - "9002:9000"   # Native port remapeado (9000 reservado para MinIO API interna)
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+      - ./infra/sql/003_clickhouse_events.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./infra/clickhouse/config.xml:/etc/clickhouse-server/config.xml:ro
+      - ./infra/clickhouse/config.d/memory.xml:/etc/clickhouse-server/config.d/memory.xml:ro
+      - ./infra/clickhouse/config.d/disable_system_logs.xml:/etc/clickhouse-server/config.d/disable_system_logs.xml:ro
+      - ./infra/clickhouse/users.d/memory.xml:/etc/clickhouse-server/users.d/memory.xml:ro
+    ulimits:
+      nofile:
+        soft: 262144
+        hard: 262144
+    cap_add:
+      - SYS_NICE       # permite get_mempolicy (NUMA) sem erro de seccomp
+      - IPC_LOCK       # permite mlock para buffers de memória
+    healthcheck:
+      test: ["CMD-SHELL", "wget -qO- http://127.0.0.1:8123/ping || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 15
+      start_period: 60s
+    networks:
+      - datathon-net
+
+  hyperdx:
+    image: hyperdx/hyperdx-local:latest
+    ports:
+      - "8082:8080"   # UI (8080 occupied by sentinel-collector)
+      - "4319:4318"   # OTLP HTTP (4318 occupied by sentinel-hyperdx)
+      - "4320:4317"   # OTLP gRPC (4317 occupied by sentinel-collector)
+    environment:
+      HYPERDX_API_KEY: ${HYPERDX_API_KEY:-local-dev-key}
+    mem_limit: 1g
+    memswap_limit: 1g
+    restart: unless-stopped
+    # HyperDX bundles its own internal ClickHouse (ch-server:9000) — NOT this project's clickhouse.
+    # Our clickhouse service is the Kafka→analytics sink; HyperDX is the OTLP observability UI.
+    # No dependency needed here.
+    networks:
+      - datathon-net
+
+  kafka-consumer:
+    build:
+      context: .
+      dockerfile: infra/Dockerfile
+    command: python -m src.logging.kafka_consumer
+    env_file: .env
+    depends_on:
+      kafka:
+        condition: service_healthy
+      clickhouse:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - datathon-net
+
+  web:
+    build:
+      context: web/
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3091:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8001
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - datathon-net
+
+  web-product:
+    build:
+      context: web-product/
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8001
+    depends_on:
+      api:
+        condition: service_healthy
+    networks:
+      - datathon-net
+
+  qdrant:
+    image: qdrant/qdrant:v1.13.6
+    restart: unless-stopped
+    ports:
+      - "6333:6333"   # HTTP / REST
+      - "6334:6334"   # gRPC
+    volumes:
+      - qdrant_data:/qdrant/storage
+    # Qdrant uses a distroless image — no curl/wget/sh available.
+    # Readiness is handled by retry logic in src/assistant/pipeline.py initialize_rag().
+    networks:
+      - datathon-net
+
+  langfuse:
+    image: langfuse/langfuse:2
+    restart: unless-stopped
+    ports:
+      - "3002:3000"
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-datathon}:${POSTGRES_PASSWORD:-datathon_local_pw}@postgres:5432/langfuse_db
+      NEXTAUTH_SECRET: ${LANGFUSE_NEXTAUTH_SECRET:-changeme-secret-at-least-32-chars!}
+      SALT: ${LANGFUSE_SALT:-changeme-salt-value}
+      NEXTAUTH_URL: http://localhost:3002
+      TELEMETRY_ENABLED: "false"
+      LANGFUSE_ENABLE_EXPERIMENTAL_FEATURES: "false"
+      LANGFUSE_LOG_LEVEL: warn
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - datathon-net
+
+volumes:
+  pg_data:
+  minio_data:
+  clickhouse_data:
+  qdrant_data:
+  kafka_data:
+
+networks:
+  datathon-net:
+    driver: bridge

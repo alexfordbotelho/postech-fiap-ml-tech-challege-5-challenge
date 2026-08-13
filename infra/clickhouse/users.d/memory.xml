@@ -1,0 +1,23 @@
+<clickhouse>
+    <profiles>
+        <default>
+            <!-- Per-query memory limit (user-level setting, must live in users.xml) -->
+            <max_memory_usage>536870912</max_memory_usage>
+            <!-- Disable query logging to prevent system.query_log parts explosion on high-throughput workloads -->
+            <log_queries>0</log_queries>
+            <log_query_threads>0</log_query_threads>
+            <!-- HTTP timeouts: prevent CLOSE_WAIT accumulation.
+                 cancel_http_readonly_queries_on_client_close=1 (config.d/memory.xml) cancels
+                 SELECT queries when the HTTP client disconnects — primary protection.
+                 max_execution_time=20 is a secondary safety valve for all queries (SELECT and
+                 INSERT). 20s is safe for our INSERT batches: kafka-consumer writes 150-1000
+                 rows/batch which ClickHouse completes in milliseconds at native throughput.
+                 The previous max_execution_time=10 killed batches only because 1000+ row batches
+                 occasionally took >10s under heavy merge pressure — 20s eliminates that risk. -->
+            <http_send_timeout>5</http_send_timeout>
+            <http_receive_timeout>30</http_receive_timeout>
+            <max_execution_time>8</max_execution_time>
+            <cancel_http_readonly_queries_on_client_close>1</cancel_http_readonly_queries_on_client_close>
+        </default>
+    </profiles>
+</clickhouse>

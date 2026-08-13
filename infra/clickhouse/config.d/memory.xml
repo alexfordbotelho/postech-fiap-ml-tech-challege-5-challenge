@@ -1,0 +1,85 @@
+<clickhouse>
+    <!--
+        Memory profile for local dev on macOS Docker Desktop ARM (3-4 GB VM total).
+
+        Critical: ClickHouse default caches are enormous —
+          mark_cache default:            5 368 709 120  (5 GB!)
+          uncompressed_cache default:    8 589 934 592  (8 GB!)
+          compiled_expression_cache:     1 073 741 824  (1 GB)
+        These must be capped before startup to avoid OOM kill (exit 137).
+    -->
+
+    <!-- Hard cap on total server memory (runtime queries + caches) -->
+    <max_server_memory_usage>2684354560</max_server_memory_usage>       <!-- 2.5 GB -->
+    <max_server_memory_usage_to_ram_ratio>0.6</max_server_memory_usage_to_ram_ratio>
+
+    <!-- Startup caches — the main cause of OOM on constrained environments -->
+    <mark_cache_size>33554432</mark_cache_size>                         <!-- 32 MB  (default 5 GB) -->
+    <uncompressed_cache_size>33554432</uncompressed_cache_size>         <!-- 32 MB  (default 8 GB) -->
+    <compiled_expression_cache_size>10485760</compiled_expression_cache_size>   <!-- 10 MB -->
+    <index_mark_cache_size>10485760</index_mark_cache_size>             <!-- 10 MB -->
+    <mmap_cache_size>1000</mmap_cache_size>                             <!-- entries -->
+
+    <!-- Background merge pools: keep defaults (16×2=32) so sanity checks pass -->
+    <background_pool_size>16</background_pool_size>
+    <background_merges_mutations_concurrency_ratio>2</background_merges_mutations_concurrency_ratio>
+    <!-- pool_size * ratio = 32 > 8 (number_of_free_entries_in_pool_to_lower_max_size_of_merge) -->
+    <merge_tree>
+        <number_of_free_entries_in_pool_to_execute_mutation>4</number_of_free_entries_in_pool_to_execute_mutation>
+        <!-- Limit individual merge chunk to 256 MB to avoid OOM on large tables -->
+        <max_bytes_to_merge_at_max_space_in_pool>268435456</max_bytes_to_merge_at_max_space_in_pool>
+        <max_bytes_to_merge_at_min_space_in_pool>67108864</max_bytes_to_merge_at_min_space_in_pool>
+        <!--
+          Circuit breaker: throw error when a table accumulates more than 3000 parts.
+          This prevents the OOM → freeze cycle where kafka-consumer creates thousands of
+          tiny 1-row parts and ClickHouse runs out of memory trying to track them.
+          Default is 100000 which is way too high for a constrained dev environment.
+        -->
+        <max_parts_in_total>3000</max_parts_in_total>
+        <!--
+          Force small inserts to form wider parts (reduces part count):
+          Min 10000 rows OR 10 MB before creating a new part.
+          Kafka consumer typically inserts 1 row at a time → this batches them.
+        -->
+        <min_rows_for_wide_part>10000</min_rows_for_wide_part>
+        <min_bytes_for_wide_part>10485760</min_bytes_for_wide_part>
+    </merge_tree>
+    <background_move_pool_size>1</background_move_pool_size>
+    <background_fetches_pool_size>1</background_fetches_pool_size>
+    <background_common_pool_size>4</background_common_pool_size>
+    <background_buffer_flush_schedule_pool_size>1</background_buffer_flush_schedule_pool_size>
+    <background_schedule_pool_size>2</background_schedule_pool_size>
+
+    <!-- Reduce startup IO threads -->
+    <max_io_thread_pool_size>4</max_io_thread_pool_size>
+    <max_thread_pool_size>100</max_thread_pool_size>
+
+    <!-- Listen on all interfaces so other containers in datathon-net can connect -->
+    <listen_host>0.0.0.0</listen_host>
+    <listen_host>::</listen_host>
+
+    <!--
+        HTTP connection hygiene: prevents CLOSE_WAIT socket accumulation.
+
+        CLOSE_WAIT root cause: httpx closes the connection (FIN) when it times out (15s).
+        ClickHouse receives FIN → CLOSE_WAIT while its Poco thread finishes the query.
+        With all Poco threads stuck in CLOSE_WAIT, new queries queue and httpx times out
+        again → cascade failure.
+
+        keep_alive_max_requests=1: forces ClickHouse to close FROM ITS SIDE after every
+        response → ClickHouse sends FIN first → TIME_WAIT on ClickHouse (not CLOSE_WAIT).
+        Poco thread freed immediately when response is sent, not when httpx eventually
+        decides to close.
+
+        cancel_http_readonly_queries_on_client_close=1: cancels a running SELECT query
+        when the HTTP client closes the connection. Without this, ClickHouse continues
+        executing the query even after httpx times out and disconnects — the Poco thread
+        stays occupied until the query finishes, which can be indefinitely.
+        NOTE: cancel_http_readonly_queries_on_client_close is a user-level setting;
+        it lives in users.d/memory.xml under <profiles><default>, NOT here.
+
+        keep_alive_timeout=2: belt-and-suspenders — close idle connections after 2s.
+    -->
+    <keep_alive_timeout>2</keep_alive_timeout>
+    <keep_alive_max_requests>1</keep_alive_max_requests>
+</clickhouse>

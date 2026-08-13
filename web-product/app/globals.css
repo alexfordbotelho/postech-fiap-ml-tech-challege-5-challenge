@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* ── AdaptaOffer Design System — Dark/Yellow palette ── */
+    --background: 0 0% 3.5%;        /* #090909 */
+    --foreground: 0 0% 100%;        /* #FFFFFF */
+    --card: 0 0% 7.8%;              /* #141414 */
+    --card-foreground: 0 0% 100%;
+    --popover: 0 0% 7.8%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 48 100% 50%;         /* #FFD100 */
+    --primary-foreground: 0 0% 0%;
+    --secondary: 0 0% 12%;          /* #1E1E1E */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 0 0% 10%;              /* #1A1A1A */
+    --muted-foreground: 0 0% 50%;   /* #808080 */
+    --accent: 48 100% 50%;
+    --accent-foreground: 0 0% 0%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 14%;             /* #242424 */
+    --input: 0 0% 10%;
+    --ring: 48 100% 50%;
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  html {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1, "cv02" 1, "cv03" 1, "cv04" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  h1, h2, h3, h4 {
+    letter-spacing: -0.02em;
+  }
+}
+
+@layer utilities {
+  /* ── Glass (dark version) ── */
+  .glass {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .glass-strong {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 209, 0, 0.12);
+  }
+
+  /* Cards */
+  .ao-card {
+    background: #141414;
+    border: 1px solid #1E1E1E;
+    border-radius: 10px;
+  }
+
+  .ao-card-hover {
+    background: #141414;
+    border: 1px solid #1E1E1E;
+    border-radius: 10px;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .ao-card-hover:hover {
+    border-color: rgba(255, 209, 0, 0.25);
+    background: #181818;
+  }
+
+  /* ── Gradient text ── */
+  .gradient-text {
+    background: linear-gradient(120deg, #ffffff 0%, #FFD100 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-yellow {
+    background: linear-gradient(135deg, #FFD100 0%, #FFA500 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-white {
+    background: linear-gradient(135deg, #ffffff 0%, rgba(255,255,255,0.6) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Yellow glow effects ── */
+  .glow-yellow {
+    box-shadow: 0 0 30px rgba(255, 209, 0, 0.2), 0 0 60px rgba(255, 209, 0, 0.06);
+  }
+
+  .glow-yellow-sm {
+    box-shadow: 0 4px 20px rgba(255, 209, 0, 0.15);
+  }
+
+  /* ── Dot grid background ── */
+  .dot-grid {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    background-size: 28px 28px;
+  }
+
+  /* ── Hero mesh gradient (Stripe-inspired depth) ── */
+  .hero-mesh {
+    background:
+      radial-gradient(ellipse 80% 60% at 50% -5%, rgba(255, 209, 0, 0.08) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 40% at 85% 75%, rgba(255, 209, 0, 0.03) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 45% at 15% 65%, rgba(255, 255, 255, 0.015) 0%, transparent 50%),
+      radial-gradient(ellipse 30% 30% at 50% 100%, rgba(255, 209, 0, 0.02) 0%, transparent 50%);
+  }
+
+  /* ── AO decorative background element ── */
+  .ao-bg::after {
+    content: 'AO';
+    position: absolute;
+    right: -4%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: clamp(160px, 28vw, 420px);
+    font-weight: 900;
+    color: rgba(255, 209, 0, 0.02);
+    pointer-events: none;
+    line-height: 1;
+    letter-spacing: -0.06em;
+    user-select: none;
+    font-feature-settings: "kern" 1;
+  }
+
+  /* ── Noise texture overlay ── */
+  .noise::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    opacity: 0.025;
+    pointer-events: none;
+    border-radius: inherit;
+  }
+
+  /* ── Divider ── */
+  .ao-divider {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #1E1E1E 20%, #1E1E1E 80%, transparent);
+  }
+
+  /* ── Tag / pill ── */
+  .ao-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 209, 0, 0.07);
+    border: 1px solid rgba(255, 209, 0, 0.18);
+    color: #FFD100;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+
+  /* Legacy alias */
+  .xp-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 209, 0, 0.07);
+    border: 1px solid rgba(255, 209, 0, 0.18);
+    color: #FFD100;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 100px;
+  }
+
+  /* ── Scan line effect (tech feel) ── */
+  .scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.03) 2px,
+      rgba(0,0,0,0.03) 4px
+    );
+    pointer-events: none;
+    border-radius: inherit;
+  }
+}

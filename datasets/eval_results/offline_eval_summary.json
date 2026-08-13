@@ -1,0 +1,47 @@
+{
+  "baseline": {
+    "policy_name": "baseline",
+    "cumulative_reward": 12.0,
+    "avg_reward": 0.024,
+    "regret": 91.0,
+    "exploration_rate": 0.0,
+    "arm_distribution": {
+      "savings_account": 0.638,
+      "term_deposit_6m": 0.0,
+      "term_deposit_12m": 0.218,
+      "personal_loan": 0.0,
+      "premium_savings": 0.144
+    },
+    "total_cases": 500
+  },
+  "thompsonsampling": {
+    "policy_name": "thompsonsampling",
+    "cumulative_reward": 36.0,
+    "avg_reward": 0.072,
+    "regret": 67.0,
+    "exploration_rate": 0.672,
+    "arm_distribution": {
+      "savings_account": 0.068,
+      "term_deposit_6m": 0.602,
+      "term_deposit_12m": 0.084,
+      "personal_loan": 0.174,
+      "premium_savings": 0.072
+    },
+    "total_cases": 500
+  },
+  "ucb1": {
+    "policy_name": "ucb1",
+    "cumulative_reward": 27.0,
+    "avg_reward": 0.054,
+    "regret": 76.0,
+    "exploration_rate": 0.498,
+    "arm_distribution": {
+      "savings_account": 0.152,
+      "term_deposit_6m": 0.306,
+      "term_deposit_12m": 0.182,
+      "personal_loan": 0.208,
+      "premium_savings": 0.152
+    },
+    "total_cases": 500
+  }
+}

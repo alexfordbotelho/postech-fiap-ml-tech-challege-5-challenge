@@ -1,0 +1,28 @@
+{
+  "expo": {
+    "name": "Datathon Bandit",
+    "slug": "datathon-bandit-mobile",
+    "version": "1.0.0",
+    "scheme": "datathon-bandit",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "backgroundColor": "#0f172a"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "br.com.datathon.bandit"
+    },
+    "android": {
+      "package": "br.com.datathon.bandit"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "extra": {
+      "apiUrl": "http://localhost:8001",
+      "wsUrl": "ws://localhost:8001/ws"
+    }
+  }
+}

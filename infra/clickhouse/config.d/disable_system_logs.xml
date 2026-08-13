@@ -1,0 +1,14 @@
+<clickhouse>
+    <!-- Disable all system log tables to prevent MergeTree parts explosion
+         on high-throughput workloads (product-page simulator at 100+ req/s). -->
+    <query_log remove="1"/>
+    <query_thread_log remove="1"/>
+    <query_views_log remove="1"/>
+    <part_log remove="1"/>
+    <trace_log remove="1"/>
+    <metric_log remove="1"/>
+    <asynchronous_metric_log remove="1"/>
+    <session_log remove="1"/>
+    <text_log remove="1"/>
+    <crash_log remove="1"/>
+</clickhouse>

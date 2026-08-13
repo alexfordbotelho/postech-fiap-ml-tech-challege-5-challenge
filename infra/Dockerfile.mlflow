@@ -1,0 +1,4 @@
+FROM ghcr.io/mlflow/mlflow:v2.18.0
+RUN pip install --no-cache-dir psycopg2-binary
+EXPOSE 5000
+CMD ["sh", "-c", "mlflow server --backend-store-uri \"postgresql://datathon_admin:${PG_PASSWORD}@${PG_HOST}:5432/datathon_db?sslmode=require\" --default-artifact-root \"${MLFLOW_ARTIFACT_ROOT}\" --host 0.0.0.0 --port 5000 --workers 1"]

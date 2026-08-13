@@ -1,0 +1,5 @@
+FROM langfuse/langfuse:2
+EXPOSE 3000
+# Constructs DATABASE_URL from separate env vars to avoid shell command-substitution
+# when $(pg-password) syntax is used in Container Apps value strings.
+ENTRYPOINT ["sh", "-c", "export DATABASE_URL=\"postgresql://datathon_admin:${PG_PASSWORD}@${PG_HOST}:5432/langfuse_db?sslmode=require\" && export DIRECT_URL=\"$DATABASE_URL\" && exec node /app/apps/web/server.js"]
