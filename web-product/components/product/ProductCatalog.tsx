@@ -42,10 +42,10 @@ export function ProductCatalog({ enabledArms, onSelect }: ProductCatalogProps) {
             return (
               <Card
                 key={arm}
-                className="relative bg-card border-border hover:border-indigo-600/60 transition-colors cursor-pointer group"
+                className="group relative cursor-pointer border-border bg-card transition-all hover:-translate-y-0.5 hover:border-primary/40"
               >
                 {p.badge && (
-                  <Badge className="absolute right-3 top-3 bg-indigo-600/20 text-indigo-300 border border-indigo-500/30 text-xs">
+                  <Badge className="absolute right-3 top-3 border border-primary/25 bg-primary/10 text-xs text-primary">
                     {p.badge}
                   </Badge>
                 )}
@@ -54,13 +54,13 @@ export function ProductCatalog({ enabledArms, onSelect }: ProductCatalogProps) {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div>
-                    <p className="text-2xl font-bold text-indigo-400">{p.rate}</p>
+                    <p className="text-2xl font-bold text-primary">{p.rate}</p>
                     <p className="text-xs text-muted-foreground mt-0.5">{p.term}</p>
                   </div>
                   <Button
                     variant="outline"
                     size="sm"
-                    className="w-full group-hover:border-indigo-600/60"
+                    className="w-full group-hover:border-primary/40"
                     onClick={() => onSelect(arm)}
                   >
                     Simular

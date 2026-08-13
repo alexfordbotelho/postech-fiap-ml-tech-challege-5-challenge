@@ -201,6 +201,8 @@ services:
     build:
       context: web/
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8001}
     restart: unless-stopped
     ports:
       - "3091:3000"
@@ -216,6 +218,8 @@ services:
     build:
       context: web-product/
       dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:8001}
     restart: unless-stopped
     ports:
       - "3000:3000"

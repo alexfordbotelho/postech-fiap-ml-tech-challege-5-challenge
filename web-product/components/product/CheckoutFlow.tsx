@@ -85,7 +85,7 @@ export function CheckoutFlow({
               <span
                 className={`rounded-full px-2.5 py-0.5 text-xs font-medium ${
                   s === step
-                    ? "bg-indigo-600 text-white"
+                    ? "bg-primary text-primary-foreground"
                     : s < step
                     ? "bg-emerald-600/30 text-emerald-400"
                     : "bg-muted text-muted-foreground"
@@ -118,7 +118,7 @@ export function CheckoutFlow({
                 Nome (simulado — não persiste)
               </label>
               <input
-                className="w-full rounded-md border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm focus:outline-none focus:ring-1 focus:ring-primary"
                 placeholder="Nome para demonstração"
                 value={nome}
                 onChange={(e) => setNome(e.target.value)}
@@ -163,7 +163,7 @@ export function CheckoutFlow({
           <div className="rounded-lg bg-muted/50 p-4 space-y-2 border border-border">
             <p className="text-xs text-muted-foreground font-medium">RESUMO</p>
             <p className="text-base font-semibold">{product.name}</p>
-            <p className="text-3xl font-bold text-indigo-400">{product.rate}</p>
+            <p className="text-3xl font-bold text-primary">{product.rate}</p>
             <p className="text-xs text-muted-foreground">{product.term}</p>
           </div>
         )}
@@ -179,7 +179,7 @@ export function CheckoutFlow({
           ) : (
             <Button
               size="sm"
-              className="bg-indigo-600 hover:bg-indigo-500"
+              className="bg-primary text-primary-foreground hover:bg-primary/90"
               onClick={handleConfirm}
               disabled={confirming}
             >

@@ -307,7 +307,7 @@ function FlagFormModal({
           <button onClick={onCancel}><X className="h-4 w-4" /></button>
         </div>
         <div className="p-4 space-y-4">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="col-span-2 space-y-1">
               <label className="text-xs font-medium">flag_key *</label>
               <input
@@ -460,7 +460,7 @@ function EvaluatePanel({ flag }: { flag: FeatureFlagItem }) {
         <FlaskConical className="h-3.5 w-3.5" />
         Testar avaliação
       </div>
-      <div className="grid grid-cols-2 gap-1.5">
+      <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
         <input
           placeholder="segment (ex: young)"
           value={segment}
@@ -705,7 +705,7 @@ function FlagValueCard({
           <span className="h-2.5 w-2.5 rounded-full shrink-0" style={{ backgroundColor: color }} />
           <span className="font-mono font-semibold text-sm">{flag_value}</span>
         </div>
-        <div className="grid grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
           <div className="bg-muted/40 rounded-lg p-2.5 text-center">
             <div className="text-xl font-bold tabular-nums">{decisions.toLocaleString("pt-BR")}</div>
             <div className="text-[10px] text-muted-foreground">Clientes</div>
@@ -766,7 +766,7 @@ function FlagDetailInner({
     <div className="mx-2 mb-3 p-4 border rounded-xl bg-background shadow-sm space-y-5">
 
       {/* KPI cards */}
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <div className="rounded-lg border bg-card px-4 py-3 text-center">
           <p className="text-2xl font-bold tabular-nums">
             {agg.total_decisions.toLocaleString("pt-BR")}
@@ -788,7 +788,7 @@ function FlagDetailInner({
       </div>
 
       {/* Charts row */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         <Card>
           <CardHeader className="pb-2 pt-3 px-4">
             <CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
@@ -861,7 +861,7 @@ function FlagDetailInner({
       </div>
 
       {/* Flag value cards (like ArmCard) */}
-      <div className={`grid gap-3 ${sortedValues.length <= 2 ? "grid-cols-2" : "grid-cols-3"}`}>
+      <div className={`grid gap-3 ${sortedValues.length <= 2 ? "grid-cols-1 sm:grid-cols-2" : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"}`}>
         {sortedValues.map((v, i) => (
           <FlagValueCard
             key={v.flag_value}
@@ -1233,21 +1233,27 @@ export default function FlagsPage() {
   const total = data?.length ?? 0;
 
   return (
-    <div className="p-6 space-y-6">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Flag className="h-5 w-5 text-primary" />
-          <h1 className="text-lg font-semibold">Feature Flags</h1>
+    <div className="space-y-6">
+      <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
+        <div>
+          <div className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.2em] text-primary">
+            <Flag className="h-3.5 w-3.5" />
+            Runtime controls
+          </div>
+          <h1 className="text-3xl font-black sm:text-4xl">Feature Flags</h1>
+          <p className="mt-1.5 text-sm text-muted-foreground">
+            Controle experiências, segmentação e rollout em tempo real.
+          </p>
         </div>
         <button
           onClick={() => setCreating(true)}
-          className="flex items-center gap-1.5 px-3 py-1.5 bg-primary text-primary-foreground rounded text-sm"
+          className="flex h-10 items-center justify-center gap-1.5 rounded-xl bg-primary px-4 text-sm font-bold text-primary-foreground shadow-[0_8px_24px_-12px_hsl(var(--primary)/0.9)] transition-all hover:-translate-y-0.5 hover:bg-primary/90"
         >
           <Plus className="h-4 w-4" /> Nova Flag
         </button>
       </div>
 
-      <div className="grid grid-cols-3 gap-3">
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
         <Card>
           <CardContent className="p-3 text-center">
             <div className="text-2xl font-bold text-primary">{total}</div>

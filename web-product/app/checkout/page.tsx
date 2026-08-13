@@ -76,11 +76,11 @@ function CheckoutInner() {
   /* ── SUCCESS ── */
   if (done) {
     return (
-      <div className="min-h-[calc(100vh-120px)] flex items-center justify-center px-6">
-        <div className="max-w-md w-full text-center">
+      <div className="flex min-h-[calc(100svh-128px)] items-center justify-center px-4 py-14 sm:px-6">
+        <div className="w-full max-w-md text-center">
           {/* Animated check */}
           <div className="relative flex items-center justify-center mb-8">
-            <div className="h-24 w-24 rounded-sm bg-[#FFD100]/8 border border-[#FFD100]/20 flex items-center justify-center">
+            <div className="flex h-24 w-24 items-center justify-center rounded-3xl border border-[#FFD100]/20 bg-[#FFD100]/[0.08] shadow-[0_20px_60px_-30px_rgba(255,209,0,0.8)]">
               <Check className="h-10 w-10 text-[#FFD100]" strokeWidth={3} />
             </div>
             {/* Top line */}
@@ -92,38 +92,38 @@ function CheckoutInner() {
           </span>
 
           <h1 className="text-4xl font-black text-white mt-4 mb-3">Parabéns!</h1>
-          <p className="text-[#555] text-sm mb-2">
+          <p className="mb-2 text-sm text-[#999]">
             Seu <span className="font-bold text-white">{product.name}</span> foi contratado.
           </p>
           <p className="text-5xl font-black mb-8" style={{ color: accentColor }}>
             {product.rate}
           </p>
 
-          <div className="border border-[#1E1E1E] bg-[#0F0F0F] rounded-sm p-5 mb-8 text-left space-y-3">
+          <div className="mb-8 space-y-3 rounded-2xl border border-[#242424] bg-[#0F0F0F] p-5 text-left">
             {[
               { label: "Produto",       val: product.name,    highlight: false },
               { label: "Rentabilidade", val: product.rate,    highlight: true  },
               { label: "Prazo",         val: product.term,    highlight: false },
             ].map(({ label, val, highlight }) => (
               <div key={label} className="flex justify-between text-sm border-b border-[#1A1A1A] pb-2 last:border-0 last:pb-0">
-                <span className="text-[#444]">{label}</span>
+                <span className="text-[#999]">{label}</span>
                 <span className={`font-bold ${highlight ? "text-[#FFD100]" : "text-white"}`}>{val}</span>
               </div>
             ))}
-            <p className="text-[10px] text-[#2A2A2A] text-center pt-2">
+            <p className="pt-2 text-center text-[10px] text-[#666]">
               Dados não persistidos · Demonstração LGPD-compliant
             </p>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-3">
             <Link href="/produtos" className="flex-1">
-              <button className="w-full h-11 border border-[#242424] text-[#666] text-sm font-semibold rounded-sm hover:border-[#FFD100]/20 hover:text-white transition-all inline-flex items-center justify-center gap-2">
+              <button className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl border border-[#2A2A2A] text-sm font-semibold text-[#AAA] transition-all hover:border-[#FFD100]/20 hover:text-white">
                 <ArrowLeft className="h-4 w-4" /> Ver produtos
               </button>
             </Link>
             <Link href="/" className="flex-1">
               <button
-                className="w-full h-11 text-sm font-bold rounded-sm transition-all inline-flex items-center justify-center gap-2"
+                className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl text-sm font-bold transition-all hover:-translate-y-0.5"
                 style={{ background: isFeatured ? "#FFD100" : "#1E1E1E", color: isFeatured ? "#000" : "#fff" }}
               >
                 Início <ArrowRight className="h-4 w-4" />
@@ -137,13 +137,13 @@ function CheckoutInner() {
 
   /* ── FORM ── */
   return (
-    <div className="min-h-[calc(100vh-120px)] px-6 py-12">
-      <div className="max-w-4xl mx-auto">
+    <div className="min-h-[calc(100svh-128px)] px-4 py-10 sm:px-6 sm:py-12">
+      <div className="mx-auto max-w-5xl">
 
         {/* Back */}
         <Link
           href={`/produtos/${arm}`}
-          className="inline-flex items-center gap-1.5 text-xs text-[#444] hover:text-white transition-colors mb-8 group font-medium"
+          className="group mb-8 inline-flex items-center gap-1.5 text-xs font-medium text-[#888] transition-colors hover:text-white"
         >
           <ArrowLeft className="h-3.5 w-3.5 group-hover:-translate-x-0.5 transition-transform" />
           Voltar ao produto
@@ -164,7 +164,7 @@ function CheckoutInner() {
                   <div key={s.id} className="flex items-center flex-1">
                     <div className="flex flex-col items-center gap-1.5">
                       <div
-                        className="h-9 w-9 rounded-sm flex items-center justify-center transition-all border"
+                        className="flex h-10 w-10 items-center justify-center rounded-xl border transition-all"
                         style={{
                           background: isCompleted ? "#FFD100" : isActive ? "#1A1A1A" : "#0D0D0D",
                           borderColor: isCompleted ? "#FFD100" : isActive ? "#FFD100" : "#1E1E1E",
@@ -172,10 +172,10 @@ function CheckoutInner() {
                       >
                         {isCompleted
                           ? <Check className="h-4 w-4 text-black" strokeWidth={3} />
-                          : <StepIcon className="h-4 w-4" style={{ color: isActive ? "#FFD100" : "#333" }} />
+                          : <StepIcon className="h-4 w-4" style={{ color: isActive ? "#FFD100" : "#777" }} />
                         }
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: isActive ? "#FFD100" : isCompleted ? "#555" : "#2A2A2A" }}>
+                      <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: isActive ? "#FFD100" : isCompleted ? "#999" : "#666" }}>
                         {s.label}
                       </span>
                     </div>
@@ -188,11 +188,11 @@ function CheckoutInner() {
             </div>
 
             {/* Step content */}
-            <div className="border border-[#1E1E1E] bg-[#0D0D0D] rounded-sm">
+            <div className="overflow-hidden rounded-2xl border border-[#242424] bg-[#0D0D0D] shadow-[0_24px_70px_-48px_rgba(0,0,0,0.9)]">
               {/* Top accent line on active step */}
               <div className="h-px bg-gradient-to-r from-transparent via-[#FFD100]/30 to-transparent" />
 
-              <div className="p-8">
+              <div className="p-5 sm:p-8">
 
                 {/* ── STEP 1 ── */}
                 {step === 1 && (
@@ -200,7 +200,7 @@ function CheckoutInner() {
                     <div>
                       <p className="text-xs font-bold text-[#FFD100] tracking-widest uppercase mb-1">Etapa 1</p>
                       <h2 className="text-xl font-black text-white">Seus dados</h2>
-                      <p className="text-sm text-[#444] mt-1">Nenhum dado é armazenado — demonstração.</p>
+                      <p className="mt-1 text-sm text-[#999]">Nenhum dado é armazenado — demonstração.</p>
                     </div>
 
                     <div className="space-y-4">
@@ -221,12 +221,12 @@ function CheckoutInner() {
                         },
                       ].map((field) => (
                         <div key={field.label} className="space-y-1.5">
-                          <label className="text-xs text-[#555] font-bold uppercase tracking-wider">
+                          <label className="text-xs font-bold uppercase tracking-wider text-[#999]">
                             {field.label}
                           </label>
                           <input
                             type={field.type}
-                            className="w-full h-11 rounded-sm border border-[#242424] bg-[#141414] px-4 text-sm text-white focus:outline-none focus:border-[#FFD100]/40 transition-colors placeholder:text-[#2A2A2A]"
+                            className="h-11 w-full rounded-xl border border-[#2A2A2A] bg-[#141414] px-4 text-sm text-white transition-colors placeholder:text-[#666] focus:border-[#FFD100]/40 focus:outline-none"
                             placeholder={field.placeholder}
                             value={field.value}
                             onChange={(e) => field.onChange(e.target.value)}
@@ -235,9 +235,9 @@ function CheckoutInner() {
                       ))}
 
                       <div className="space-y-1.5">
-                        <label className="text-xs text-[#555] font-bold uppercase tracking-wider">CPF (simulado)</label>
+                        <label className="text-xs font-bold uppercase tracking-wider text-[#999]">CPF (simulado)</label>
                         <input
-                          className="w-full h-11 rounded-sm border border-[#242424] bg-[#141414] px-4 text-sm text-white focus:outline-none focus:border-[#FFD100]/40 transition-colors placeholder:text-[#2A2A2A]"
+                          className="h-11 w-full rounded-xl border border-[#2A2A2A] bg-[#141414] px-4 text-sm text-white transition-colors placeholder:text-[#666] focus:border-[#FFD100]/40 focus:outline-none"
                           placeholder="000.000.000-00"
                           value={cpf}
                           onChange={(e) => {
@@ -252,9 +252,9 @@ function CheckoutInner() {
                       </div>
                     </div>
 
-                    <div className="flex items-center gap-2.5 border border-[#1A1A1A] bg-[#0A0A0A] rounded-sm px-4 py-3">
-                      <Lock className="h-3.5 w-3.5 text-[#333]" />
-                      <p className="text-xs text-[#333]">
+                    <div className="flex items-center gap-2.5 rounded-xl border border-[#222] bg-[#0A0A0A] px-4 py-3">
+                      <Lock className="h-3.5 w-3.5 text-[#777]" />
+                      <p className="text-xs text-[#777]">
                         Nenhum dado pessoal é armazenado nesta demonstração (LGPD-compliant).
                       </p>
                     </div>
@@ -267,7 +267,7 @@ function CheckoutInner() {
                     <div>
                       <p className="text-xs font-bold text-[#FFD100] tracking-widest uppercase mb-1">Etapa 2</p>
                       <h2 className="text-xl font-black text-white">Perfil financeiro</h2>
-                      <p className="text-sm text-[#444] mt-1">Informações para personalizar sua contratação.</p>
+                      <p className="mt-1 text-sm text-[#999]">Informações para personalizar sua contratação.</p>
                     </div>
 
                     <div className="space-y-6">
@@ -278,7 +278,7 @@ function CheckoutInner() {
                             <button
                               key={label}
                               onClick={() => setHasMortgage(val)}
-                              className="flex-1 h-11 text-sm font-semibold rounded-sm border transition-all"
+                              className="h-11 flex-1 rounded-xl border text-sm font-semibold transition-all"
                               style={{
                                 background: hasMortgage === val ? "rgba(255,209,0,0.08)" : "#0D0D0D",
                                 borderColor: hasMortgage === val ? "#FFD100" : "#242424",
@@ -298,7 +298,7 @@ function CheckoutInner() {
                             <button
                               key={label}
                               onClick={() => setHasLoan(val)}
-                              className="flex-1 h-11 text-sm font-semibold rounded-sm border transition-all"
+                              className="h-11 flex-1 rounded-xl border text-sm font-semibold transition-all"
                               style={{
                                 background: hasLoan === val ? "rgba(255,209,0,0.08)" : "#0D0D0D",
                                 borderColor: hasLoan === val ? "#FFD100" : "#242424",
@@ -313,12 +313,12 @@ function CheckoutInner() {
 
                       <div className="space-y-3">
                         <p className="text-sm font-semibold text-[#AAA]">Qual seu objetivo de investimento?</p>
-                        <div className="grid grid-cols-2 gap-2">
+                        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
                           {["Reserva de emergência", "Aposentadoria", "Viagem / Lazer", "Compra planejada"].map((opt) => (
                             <button
                               key={opt}
                               onClick={() => setObjetivo(opt)}
-                              className="h-11 px-3 text-xs font-semibold rounded-sm border transition-all text-left"
+                              className="h-11 rounded-xl border px-3 text-left text-xs font-semibold transition-all"
                               style={{
                                 background: objetivo === opt ? "rgba(255,209,0,0.08)" : "#0D0D0D",
                                 borderColor: objetivo === opt ? "#FFD100" : "#242424",
@@ -340,14 +340,14 @@ function CheckoutInner() {
                     <div>
                       <p className="text-xs font-bold text-[#FFD100] tracking-widest uppercase mb-1">Etapa 3</p>
                       <h2 className="text-xl font-black text-white">Confirmar contratação</h2>
-                      <p className="text-sm text-[#444] mt-1">Revise os detalhes antes de finalizar.</p>
+                      <p className="mt-1 text-sm text-[#999]">Revise os detalhes antes de finalizar.</p>
                     </div>
 
                     {/* Product summary */}
-                    <div className="border border-[#FFD100]/15 bg-[#0A0A0A] rounded-sm overflow-hidden">
+                    <div className="overflow-hidden rounded-2xl border border-[#FFD100]/15 bg-[#0A0A0A]">
                       <div className="p-5 border-b border-[#1A1A1A] flex items-center gap-3">
                         <div
-                          className="h-10 w-10 rounded-sm flex items-center justify-center border"
+                          className="flex h-10 w-10 items-center justify-center rounded-xl border"
                           style={{
                             background: isFeatured ? "rgba(255,209,0,0.08)" : "#141414",
                             borderColor: isFeatured ? "rgba(255,209,0,0.2)" : "#242424",
@@ -357,35 +357,35 @@ function CheckoutInner() {
                         </div>
                         <div className="flex-1">
                           <p className="font-bold text-white text-sm">{product.name}</p>
-                          <p className="text-xs text-[#444]">{product.term}</p>
+                          <p className="text-xs text-[#888]">{product.term}</p>
                         </div>
                         <p className="text-2xl font-black" style={{ color: accentColor }}>{product.rate}</p>
                       </div>
                       <div className="px-5 py-4 space-y-2.5">
                         {nome && (
                           <div className="flex justify-between text-sm">
-                            <span className="text-[#444]">Nome</span>
+                            <span className="text-[#999]">Nome</span>
                             <span className="text-white font-medium">{nome}</span>
                           </div>
                         )}
                         <div className="flex justify-between text-sm">
-                          <span className="text-[#444]">Tipo</span>
+                          <span className="text-[#999]">Tipo</span>
                           <span className="text-white font-medium">
                             {arm?.includes("loan") ? "Empréstimo Pessoal" : "Renda Fixa"}
                           </span>
                         </div>
                         {objetivo && (
                           <div className="flex justify-between text-sm">
-                            <span className="text-[#444]">Objetivo</span>
+                            <span className="text-[#999]">Objetivo</span>
                             <span className="text-white font-medium">{objetivo}</span>
                           </div>
                         )}
                       </div>
                     </div>
 
-                    <div className="flex items-start gap-3 border border-[#1A1A1A] bg-[#0A0A0A] rounded-sm px-4 py-3">
-                      <Shield className="h-4 w-4 text-[#333] flex-shrink-0 mt-0.5" />
-                      <p className="text-xs text-[#333] leading-relaxed">
+                    <div className="flex items-start gap-3 rounded-xl border border-[#222] bg-[#0A0A0A] px-4 py-3">
+                      <Shield className="mt-0.5 h-4 w-4 flex-shrink-0 text-[#777]" />
+                      <p className="text-xs leading-relaxed text-[#777]">
                         Ao confirmar, você concorda com os Termos de Uso e a Política de Privacidade.
                         Esta é uma demonstração — nenhuma transação real é processada.
                       </p>
@@ -397,7 +397,7 @@ function CheckoutInner() {
                 <div className="flex items-center justify-between pt-7 mt-7 border-t border-[#1A1A1A]">
                   <button
                     onClick={() => setStep((s) => s - 1)}
-                    className={`h-10 px-5 border border-[#242424] text-[#555] text-sm font-semibold rounded-sm hover:border-[#FFD100]/20 hover:text-white transition-all inline-flex items-center gap-1.5 ${step === 1 ? "invisible" : ""}`}
+                    className={`inline-flex h-10 items-center gap-1.5 rounded-xl border border-[#2A2A2A] px-5 text-sm font-semibold text-[#999] transition-all hover:border-[#FFD100]/20 hover:text-white ${step === 1 ? "invisible" : ""}`}
                   >
                     <ArrowLeft className="h-4 w-4" /> Voltar
                   </button>
@@ -409,7 +409,7 @@ function CheckoutInner() {
                         (step === 1 && nome.trim().length === 0) ||
                         (step === 2 && (hasLoan === null || hasMortgage === null))
                       }
-                      className="h-10 px-7 bg-[#FFD100] hover:bg-[#E6BC00] disabled:bg-[#1A1A1A] disabled:text-[#333] disabled:cursor-not-allowed text-black text-sm font-bold rounded-sm transition-all inline-flex items-center gap-1.5"
+                      className="inline-flex h-10 items-center gap-1.5 rounded-xl bg-[#FFD100] px-7 text-sm font-bold text-black transition-all hover:bg-[#E6BC00] disabled:cursor-not-allowed disabled:bg-[#1A1A1A] disabled:text-[#666]"
                     >
                       Continuar <ArrowRight className="h-4 w-4" />
                     </button>
@@ -417,7 +417,7 @@ function CheckoutInner() {
                     <button
                       onClick={handleConfirm}
                       disabled={confirming}
-                      className="h-10 px-7 text-sm font-bold rounded-sm transition-all inline-flex items-center gap-2"
+                      className="inline-flex h-10 items-center gap-2 rounded-xl px-7 text-sm font-bold transition-all"
                       style={{
                         background: isFeatured ? "#FFD100" : "#1E1E1E",
                         color: isFeatured ? "#000" : "#fff",
@@ -443,12 +443,12 @@ function CheckoutInner() {
 
           {/* ── SUMMARY COLUMN ── */}
           <div className="space-y-4">
-            <div className="border border-[#242424] bg-[#0F0F0F] rounded-sm p-6">
-              <p className="text-xs font-bold text-[#444] uppercase tracking-wider mb-4">Você está contratando</p>
+            <div className="rounded-2xl border border-[#282828] bg-[#0F0F0F] p-6 lg:sticky lg:top-24">
+              <p className="mb-4 text-xs font-bold uppercase tracking-wider text-[#888]">Você está contratando</p>
 
               <div className="flex items-center gap-3 mb-5 pb-5 border-b border-[#1A1A1A]">
                 <div
-                  className="h-10 w-10 rounded-sm flex items-center justify-center border flex-shrink-0"
+                  className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border"
                   style={{
                     background: isFeatured ? "rgba(255,209,0,0.08)" : "#141414",
                     borderColor: isFeatured ? "rgba(255,209,0,0.15)" : "#242424",
@@ -458,12 +458,12 @@ function CheckoutInner() {
                 </div>
                 <div>
                   <p className="font-bold text-white text-sm">{product.name}</p>
-                  <p className="text-xs text-[#444]">{product.term}</p>
+                  <p className="text-xs text-[#888]">{product.term}</p>
                 </div>
               </div>
 
               <div className="mb-5 pb-5 border-b border-[#1A1A1A]">
-                <p className="text-xs text-[#444] font-semibold mb-0.5 uppercase tracking-wider">Rentabilidade</p>
+                <p className="mb-0.5 text-xs font-semibold uppercase tracking-wider text-[#888]">Rentabilidade</p>
                 <p className="text-4xl font-black" style={{ color: accentColor }}>{product.rate}</p>
               </div>
 
@@ -473,16 +473,16 @@ function CheckoutInner() {
                   { icon: Lock,     text: "Dados protegidos (LGPD)" },
                   { icon: Sparkles, text: "Contratação 100% digital" },
                 ].map(({ icon: I, text }) => (
-                  <div key={text} className="flex items-center gap-2 text-xs text-[#333]">
-                    <I className="h-3.5 w-3.5 text-[#2A2A2A]" />
+                  <div key={text} className="flex items-center gap-2 text-xs text-[#777]">
+                    <I className="h-3.5 w-3.5 text-[#666]" />
                     {text}
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="border border-[#141414] bg-[#080808] rounded-sm p-4">
-              <p className="text-[10px] text-[#2A2A2A] text-center leading-relaxed">
+            <div className="rounded-xl border border-[#1E1E1E] bg-[#080808] p-4">
+              <p className="text-center text-[10px] leading-relaxed text-[#666]">
                 Demonstração fictícia · Não constitui oferta real · Dados não persistidos
               </p>
             </div>
@@ -498,7 +498,7 @@ export default function CheckoutPage() {
     <Suspense
       fallback={
         <div className="min-h-[calc(100vh-120px)] flex items-center justify-center">
-          <div className="h-8 w-8 rounded-sm border-2 border-[#FFD100]/20 border-t-[#FFD100] animate-spin" />
+          <div className="h-8 w-8 animate-spin rounded-xl border-2 border-[#FFD100]/20 border-t-[#FFD100]" />
         </div>
       }
     >

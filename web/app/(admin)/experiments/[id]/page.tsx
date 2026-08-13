@@ -183,7 +183,7 @@ export default function ExperimentDetailPage({ params }: { params: Promise<{ id:
 
   if (isLoading && !exp) {
     return (
-      <div className="p-6 space-y-4 max-w-4xl">
+      <div className="max-w-5xl space-y-4">
         {[...Array(4)].map((_, i) => (
           <div key={i} className="h-24 rounded-lg bg-muted animate-pulse" />
         ))}
@@ -191,7 +191,7 @@ export default function ExperimentDetailPage({ params }: { params: Promise<{ id:
     );
   }
 
-  if (!exp) return <div className="p-6 text-sm text-muted-foreground">Experimento não encontrado.</div>;
+  if (!exp) return <div className="text-sm text-muted-foreground">Experimento não encontrado.</div>;
 
   const minN = exp.min_sample_per_arm;
 
@@ -211,7 +211,7 @@ export default function ExperimentDetailPage({ params }: { params: Promise<{ id:
   }));
 
   return (
-    <div className="p-6 space-y-5 max-w-4xl">
+    <div className="max-w-5xl space-y-5">
       {/* Header */}
       <div className="flex items-start justify-between gap-3">
         <div className="flex items-start gap-3 min-w-0">
@@ -221,7 +221,8 @@ export default function ExperimentDetailPage({ params }: { params: Promise<{ id:
             </Button>
           </Link>
           <div className="min-w-0">
-            <h1 className="text-base font-semibold leading-tight">{exp.name}</h1>
+            <p className="mb-1 text-[10px] font-bold uppercase tracking-[0.18em] text-primary">Experiment detail</p>
+            <h1 className="text-2xl font-black leading-tight sm:text-3xl">{exp.name}</h1>
             <div className="flex items-center gap-3 mt-1 text-xs text-muted-foreground flex-wrap">
               <span className={`font-medium ${
                 exp.status === "running" ? "text-green-600" :
@@ -273,7 +274,7 @@ export default function ExperimentDetailPage({ params }: { params: Promise<{ id:
       <RecommendationBanner text={exp.recommendation} />
 
       {/* Charts row */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
         <Card>
           <CardHeader className="pb-2 pt-4 px-4">
             <CardTitle className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
@@ -324,7 +325,7 @@ export default function ExperimentDetailPage({ params }: { params: Promise<{ id:
       </div>
 
       {/* Arm cards */}
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         {exp.arms.map((arm, i) => <ArmCard key={arm.arm_id} arm={arm} idx={i} />)}
       </div>
 

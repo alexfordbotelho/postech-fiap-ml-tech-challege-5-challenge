@@ -85,9 +85,9 @@ export default function ProductDetailPage() {
   if (!product) {
     return (
       <div className="px-6 py-24 text-center max-w-md mx-auto">
-        <p className="text-[#555] mb-6">Produto não encontrado.</p>
+        <p className="mb-6 text-[#999]">Produto não encontrado.</p>
         <Link href="/produtos">
-          <button className="h-9 px-5 border border-[#2A2A2A] text-[#666] text-sm rounded-sm hover:border-[#FFD100]/30 hover:text-white transition-all inline-flex items-center gap-2">
+          <button className="inline-flex h-10 items-center gap-2 rounded-xl border border-[#2A2A2A] px-5 text-sm text-[#AAA] transition-all hover:border-[#FFD100]/30 hover:text-white">
             <ArrowLeft className="h-4 w-4" /> Voltar
           </button>
         </Link>
@@ -126,11 +126,11 @@ export default function ProductDetailPage() {
           <div className="pointer-events-none absolute -top-20 right-1/4 h-48 w-48 rounded-full bg-[#FFD100]/5 blur-3xl" />
         )}
 
-        <div className="relative max-w-5xl mx-auto px-6 py-14">
+        <div className="relative mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16">
           {/* Breadcrumb */}
           <Link
             href="/produtos"
-            className="inline-flex items-center gap-1.5 text-xs text-[#444] hover:text-white transition-colors mb-8 group font-medium"
+            className="group mb-8 inline-flex items-center gap-1.5 text-xs font-medium text-[#888] transition-colors hover:text-white"
           >
             <ArrowLeft className="h-3.5 w-3.5 group-hover:-translate-x-0.5 transition-transform" />
             Todos os produtos
@@ -141,7 +141,7 @@ export default function ProductDetailPage() {
               {/* Badges */}
               <div className="flex flex-wrap gap-2 mb-5">
                 {product.badge && (
-                  <span className="inline-flex items-center px-2.5 py-1 border border-[#2A2A2A] text-[#666] text-xs font-semibold rounded-sm bg-[#141414]">
+                  <span className="inline-flex items-center rounded-lg border border-[#2A2A2A] bg-[#141414] px-2.5 py-1 text-xs font-semibold text-[#AAA]">
                     {product.badge}
                   </span>
                 )}
@@ -155,7 +155,7 @@ export default function ProductDetailPage() {
               {/* Icon + name */}
               <div className="flex items-start gap-4 mb-6">
                 <div
-                  className="h-14 w-14 rounded-sm flex items-center justify-center flex-shrink-0 border"
+                  className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-2xl border"
                   style={{
                     background: isFeatured ? "rgba(255,209,0,0.08)" : "rgba(255,255,255,0.03)",
                     borderColor: isFeatured ? "rgba(255,209,0,0.2)" : "#242424",
@@ -164,28 +164,28 @@ export default function ProductDetailPage() {
                   <Icon className="h-7 w-7" style={{ color: accentColor }} />
                 </div>
                 <div>
-                  <h1 className="text-5xl font-black text-white leading-tight">{product.name}</h1>
-                  <p className="text-sm text-[#555] mt-1">{desc?.short}</p>
+                  <h1 className="text-4xl font-black leading-tight text-white sm:text-5xl">{product.name}</h1>
+                  <p className="mt-1 max-w-xl text-sm leading-relaxed text-[#999]">{desc?.short}</p>
                 </div>
               </div>
 
               {/* Rate */}
               <div className="flex items-baseline gap-4 mb-2">
-                <span className="text-7xl font-black leading-none" style={{ color: accentColor }}>
+                <span className="text-5xl font-black leading-none sm:text-7xl" style={{ color: accentColor }}>
                   {product.rate}
                 </span>
               </div>
-              <p className="text-sm text-[#444] font-medium">{product.term}</p>
+              <p className="text-sm font-medium text-[#888]">{product.term}</p>
             </div>
 
             {/* CTA card */}
             <div className="w-full sm:w-60 flex-shrink-0">
-              <div className="border border-[#242424] bg-[#0F0F0F] rounded-sm p-6">
-                <p className="text-xs font-bold text-[#555] uppercase tracking-wider mb-4">Contratação</p>
+              <div className="rounded-2xl border border-[#282828] bg-[#0F0F0F]/90 p-6 shadow-[0_24px_70px_-45px_rgba(255,209,0,0.4)]">
+                <p className="mb-4 text-xs font-bold uppercase tracking-wider text-[#999]">Contratação</p>
 
                 <Link href={`/checkout?id=${arm}`}>
                   <button
-                    className="w-full h-11 font-bold text-sm rounded-sm transition-all inline-flex items-center justify-center gap-2 mb-3"
+                    className="mb-3 inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl text-sm font-bold transition-all hover:-translate-y-0.5"
                     style={{
                       background: isFeatured ? ctaColor : "#1E1E1E",
                       color: isFeatured ? "#000" : "#fff",
@@ -194,7 +194,7 @@ export default function ProductDetailPage() {
                     Contratar agora <ArrowRight className="h-4 w-4" />
                   </button>
                 </Link>
-                <p className="text-[10px] text-[#333] text-center mb-5">
+                <p className="mb-5 text-center text-[10px] text-[#777]">
                   Processo 100% digital · LGPD-compliant
                 </p>
 
@@ -204,8 +204,8 @@ export default function ProductDetailPage() {
                     { icon: Clock, text: "Contratação em minutos" },
                     { icon: Zap, text: "Sem burocracia" },
                   ].map(({ icon: I, text }) => (
-                    <div key={text} className="flex items-center gap-2 text-xs text-[#444]">
-                      <I className="h-3.5 w-3.5 text-[#333]" />
+                    <div key={text} className="flex items-center gap-2 text-xs text-[#999]">
+                      <I className="h-3.5 w-3.5 text-[#777]" />
                       {text}
                     </div>
                   ))}
@@ -217,7 +217,7 @@ export default function ProductDetailPage() {
       </section>
 
       {/* ════════════════ CONTENT ════════════════ */}
-      <div className="max-w-5xl mx-auto px-6 py-14 grid grid-cols-1 lg:grid-cols-3 gap-10">
+      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-10 px-4 py-14 sm:px-6 lg:grid-cols-3">
 
         {/* Left: about + features + simulator */}
         <div className="lg:col-span-2 space-y-12">
@@ -225,7 +225,7 @@ export default function ProductDetailPage() {
           {/* About */}
           <div className="opacity-0 animate-fade-up" style={{ animationDelay: "0ms" }}>
             <p className="text-xs font-bold text-[#FFD100] tracking-widest uppercase mb-3">Sobre o produto</p>
-            <p className="text-[#777] leading-relaxed text-sm">{desc?.long}</p>
+            <p className="text-sm leading-relaxed text-[#B5B5B5]">{desc?.long}</p>
           </div>
 
           {/* Features */}
@@ -233,7 +233,7 @@ export default function ProductDetailPage() {
             <p className="text-xs font-bold text-[#FFD100] tracking-widest uppercase mb-4">Características</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               {features.map((feat) => (
-                <div key={feat} className="flex items-center gap-3 border border-[#1E1E1E] bg-[#0F0F0F] rounded-sm px-4 py-3.5">
+                <div key={feat} className="flex items-center gap-3 rounded-xl border border-[#242424] bg-[#0F0F0F] px-4 py-3.5 transition-colors hover:border-[#FFD100]/15">
                   <CheckCircle2 className="h-4 w-4 flex-shrink-0" style={{ color: accentColor }} />
                   <span className="text-sm text-[#AAA] font-medium">{feat}</span>
                 </div>
@@ -245,10 +245,10 @@ export default function ProductDetailPage() {
           {product.cdi && (
             <div className="opacity-0 animate-fade-up" style={{ animationDelay: "160ms" }}>
               <p className="text-xs font-bold text-[#FFD100] tracking-widest uppercase mb-4">Simulador de Rentabilidade</p>
-              <div className="border border-[#1E1E1E] bg-[#0F0F0F] rounded-sm p-6 space-y-5">
-                <div className="grid grid-cols-2 gap-4">
+              <div className="space-y-5 rounded-2xl border border-[#242424] bg-[#0F0F0F] p-5 sm:p-6">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                   <div className="space-y-2">
-                    <Label htmlFor="valor" className="text-xs text-[#555] font-semibold uppercase tracking-wider">
+                    <Label htmlFor="valor" className="text-xs font-semibold uppercase tracking-wider text-[#999]">
                       Valor inicial (R$)
                     </Label>
                     <Input
@@ -257,11 +257,11 @@ export default function ProductDetailPage() {
                       min="0"
                       value={valor}
                       onChange={(e) => setValor(e.target.value)}
-                      className="bg-[#141414] border-[#242424] focus:border-[#FFD100]/40 text-white rounded-sm"
+                      className="rounded-xl border-[#2A2A2A] bg-[#141414] text-white focus:border-[#FFD100]/40"
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="meses" className="text-xs text-[#555] font-semibold uppercase tracking-wider">
+                    <Label htmlFor="meses" className="text-xs font-semibold uppercase tracking-wider text-[#999]">
                       Prazo (meses)
                     </Label>
                     <Input
@@ -271,14 +271,14 @@ export default function ProductDetailPage() {
                       max="360"
                       value={meses}
                       onChange={(e) => setMeses(e.target.value)}
-                      className="bg-[#141414] border-[#242424] focus:border-[#FFD100]/40 text-white rounded-sm"
+                      className="rounded-xl border-[#2A2A2A] bg-[#141414] text-white focus:border-[#FFD100]/40"
                     />
                   </div>
                 </div>
 
                 {projection !== null && (
-                  <div className="border border-[#FFD100]/10 bg-[#FFD100]/3 rounded-sm p-5">
-                    <p className="text-xs text-[#555] font-semibold uppercase tracking-wider mb-1">Projeção estimada</p>
+                  <div className="rounded-xl border border-[#FFD100]/10 bg-[#FFD100]/[0.03] p-5">
+                    <p className="mb-1 text-xs font-semibold uppercase tracking-wider text-[#999]">Projeção estimada</p>
                     <p className="text-4xl font-black text-[#FFD100]">
                       R${" "}{projection.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </p>
@@ -287,7 +287,7 @@ export default function ProductDetailPage() {
                         +R${" "}{gain.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}{" "}de rendimento
                       </p>
                     )}
-                    <p className="text-xs text-[#333] mt-3">
+                    <p className="mt-3 text-xs text-[#777]">
                       {product.name} · {product.rate} · CDI ref. 10,5% a.a. (fictício — demo)
                     </p>
                   </div>
@@ -301,8 +301,8 @@ export default function ProductDetailPage() {
         <div className="opacity-0 animate-slide-in-right" style={{ animationDelay: "200ms" }}>
           <div className="sticky top-24 space-y-4">
             {/* Summary card */}
-            <div className="border border-[#242424] bg-[#0F0F0F] rounded-sm p-5">
-              <p className="text-xs font-bold text-[#444] uppercase tracking-wider mb-4">Resumo</p>
+            <div className="rounded-2xl border border-[#282828] bg-[#0F0F0F] p-5">
+              <p className="mb-4 text-xs font-bold uppercase tracking-wider text-[#888]">Resumo</p>
               <div className="space-y-3 mb-5">
                 {[
                   { label: "Produto",        val: product.name,  highlight: false },
@@ -310,14 +310,14 @@ export default function ProductDetailPage() {
                   { label: "Prazo",          val: product.term,  highlight: false },
                 ].map(({ label, val, highlight }) => (
                   <div key={label} className="flex justify-between items-center text-sm border-b border-[#1A1A1A] pb-3 last:border-0 last:pb-0">
-                    <span className="text-[#555]">{label}</span>
+                    <span className="text-[#999]">{label}</span>
                     <span className={`font-bold ${highlight ? "text-[#FFD100] text-base" : "text-white"}`}>{val}</span>
                   </div>
                 ))}
               </div>
               <Link href={`/checkout?id=${arm}`}>
                 <button
-                  className="w-full h-11 font-bold text-sm rounded-sm transition-all inline-flex items-center justify-center gap-2"
+                  className="inline-flex h-11 w-full items-center justify-center gap-2 rounded-xl text-sm font-bold transition-all hover:-translate-y-0.5"
                   style={{
                     background: isFeatured ? ctaColor : "#1E1E1E",
                     color: isFeatured ? "#000" : "#fff",
@@ -329,8 +329,8 @@ export default function ProductDetailPage() {
             </div>
 
             {/* Other products */}
-            <div className="border border-[#1E1E1E] bg-[#0A0A0A] rounded-sm p-5">
-              <p className="text-xs font-bold text-[#333] uppercase tracking-wider mb-3">Outros produtos</p>
+            <div className="rounded-2xl border border-[#242424] bg-[#0A0A0A] p-5">
+              <p className="mb-3 text-xs font-bold uppercase tracking-wider text-[#777]">Outros produtos</p>
               <div className="space-y-0">
                 {Object.entries(PRODUCT_CATALOG)
                   .filter(([key]) => key !== arm)
@@ -339,16 +339,16 @@ export default function ProductDetailPage() {
                     <Link
                       key={key}
                       href={`/produtos/${key}`}
-                      className="flex items-center justify-between py-2.5 hover:bg-white/[0.02] rounded-sm px-2 -mx-2 transition-colors group border-b border-[#1A1A1A] last:border-0"
+                      className="group -mx-2 flex items-center justify-between rounded-lg border-b border-[#1A1A1A] px-2 py-2.5 transition-colors last:border-0 hover:bg-white/[0.03]"
                     >
-                      <span className="text-xs text-[#444] group-hover:text-white transition-colors font-medium">{p.name}</span>
+                      <span className="text-xs font-medium text-[#888] transition-colors group-hover:text-white">{p.name}</span>
                       <span className="text-xs font-black" style={{ color: PRODUCT_UI[key]?.accent ?? "#666" }}>
                         {p.rate}
                       </span>
                     </Link>
                   ))}
               </div>
-              <Link href="/produtos" className="mt-3 flex items-center gap-1.5 text-xs text-[#333] hover:text-[#FFD100] transition-colors pt-2 font-semibold">
+              <Link href="/produtos" className="mt-3 flex items-center gap-1.5 pt-2 text-xs font-semibold text-[#888] transition-colors hover:text-[#FFD100]">
                 Ver todos <ArrowRight className="h-3 w-3" />
               </Link>
             </div>

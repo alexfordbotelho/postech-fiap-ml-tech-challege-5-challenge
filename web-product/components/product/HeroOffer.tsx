@@ -24,7 +24,7 @@ export function HeroOffer({
   const product = PRODUCT_CATALOG[arm] ?? PRODUCT_CATALOG.savings_account;
 
   return (
-    <div className="relative overflow-hidden rounded-sm border border-[#1E1E1E] bg-[#0D0D0D] p-8">
+    <div className="relative overflow-hidden rounded-2xl border border-[#242424] bg-[#0D0D0D] p-6 sm:p-8">
       {/* Top accent line */}
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#FFD100]/40 to-transparent" />
       {/* Ambient glow */}
@@ -46,7 +46,7 @@ export function HeroOffer({
               Recomendado para seu perfil
             </span>
           ) : (
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full border border-[#242424] text-[#444] text-[11px] font-semibold">
+            <span className="inline-flex items-center gap-1.5 rounded-full border border-[#242424] px-3 py-1 text-[11px] font-semibold text-[#999]">
               Oferta padrão — IA desativada
             </span>
           )}
@@ -63,7 +63,7 @@ export function HeroOffer({
           <span className="text-5xl font-black text-[#FFD100]">{product.rate}</span>
         </div>
 
-        <p className="text-[#555] text-sm mb-8">
+        <p className="mb-8 text-sm text-[#999]">
           {product.term}
           {adaptiveEnabled ? " · Selecionado pelo sistema adaptativo" : ""}
         </p>
@@ -72,7 +72,7 @@ export function HeroOffer({
           <Button
             onClick={onContratar}
             size="lg"
-            className="h-11 px-8 text-black font-bold rounded-sm transition-all glow-yellow-sm hover:glow-yellow inline-flex items-center gap-2"
+            className="inline-flex h-11 items-center gap-2 rounded-xl px-8 font-bold text-black transition-all glow-yellow-sm hover:-translate-y-0.5 hover:glow-yellow"
             style={{ backgroundColor: ctaColor }}
           >
             Contratar agora <ArrowRight className="h-4 w-4" />
@@ -80,7 +80,7 @@ export function HeroOffer({
           <Button
             variant="outline"
             size="lg"
-            className="h-11 px-8 border-[#242424] text-[#888] hover:text-white hover:border-[#333] hover:bg-white/5 rounded-sm transition-all"
+            className="h-11 rounded-xl border-[#242424] px-8 text-[#AAA] transition-all hover:border-[#333] hover:bg-white/5 hover:text-white"
           >
             Ver detalhes
           </Button>

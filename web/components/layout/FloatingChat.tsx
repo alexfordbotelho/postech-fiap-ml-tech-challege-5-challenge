@@ -209,7 +209,7 @@ export function FloatingChat({
       </button>
 
       {open && (
-        <div className="fixed bottom-6 right-6 z-50 flex w-[520px] flex-col rounded-xl border bg-card shadow-2xl">
+        <div className="fixed bottom-3 left-3 right-3 z-50 flex max-h-[calc(100dvh-7rem)] w-auto flex-col overflow-hidden rounded-2xl border border-border/80 bg-card/95 shadow-2xl backdrop-blur-2xl sm:bottom-6 sm:left-auto sm:right-6 sm:max-h-[calc(100dvh-3rem)] sm:w-[520px]">
           {/* ── Header ── */}
           <div className="flex items-center justify-between border-b px-4 py-3">
             <span className="text-sm font-semibold">Assistente Financeiro</span>
